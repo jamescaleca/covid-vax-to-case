@@ -1,0 +1,105 @@
+$canvas: #030303;
+$element: #1A1A1B;
+
+$font-title: rgb(233, 233, 233);
+$font-descr: rgb(206, 206, 206); 
+$marker-font: rgb(19, 19, 19);
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+    outline: none;
+    text-decoration: none;
+}
+
+.app {
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    padding-bottom: 3em;
+    background-color: $canvas;
+    color: $font-descr;
+    height: auto;
+
+    #navbar {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        height: 2.5em;
+        button {
+            background-color: $element;
+            color: firebrick;
+            padding: 3px 8px;
+            border-radius: 2%;
+        }
+        p {
+            color: firebrick;
+            i {
+                color: $font-descr;
+            }
+        }
+    }
+
+    .home {
+        display: flex;
+        flex-direction: column;
+        height: 150vh;
+        
+        align-items: center;
+        #home-page-title {
+            display: flex;
+            justify-content: center;
+            margin: 1em;
+        }
+        .about-map {
+            margin: 1em;
+            list-style-type: none;
+            font-size: 14px;
+        }
+        footer {
+            margin-left: 1em;
+            font-size: 14px;
+        }
+        .map {
+            height: 95vh;
+            width: 95%;
+            .marker {
+                color: $marker-font;
+            }
+            
+        }
+        .main-content {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            list-style-type: none;
+            justify-content: space-between;
+            align-items: space-between;
+            .data-block {
+                border: 2px solid white;
+                border-radius: 2%;
+                box-shadow: 3px 3px rgb(170, 170, 170);
+                margin-bottom: 1em;
+                padding-right: 1em;
+                #us-data-ul,
+                #state-res-data-ul,
+                #county-res-data-ul {
+                    margin-top: 1em;
+                    margin-left: 1em;
+                    list-style-type: none;
+                    margin-bottom: 20px;
+                    h1 {
+                        margin-bottom: 10px;
+                    }
+                    li {
+                        margin-bottom: 1em;
+                    }
+                }
+
+            }
+        }
+        
+    }
+}
