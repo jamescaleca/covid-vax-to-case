@@ -1,14 +1,12 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext } from 'react'
 import { Link } from 'react-router-dom'
 import { DataContext } from '../contexts/dataProvider'
 import CountryMap from './CountryMap'
-import StateMap from './StateMap'
 import CountryData from './CountryData'
-import StateData from './StateData'
 import '../css/styles.css'
 
 function Home() {
-    const { countryView, countryData, stateCombinedData, toggleCountryView } = useContext(DataContext)
+    const { countryData, toggleCountryView } = useContext(DataContext)
 
 
     const aboutMap = (

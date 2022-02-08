@@ -13,7 +13,7 @@ export default function Marker(props) {
         textAlign: 'center',
     }
 
-    const {show, county, lat, lng, text, percentVaxxed} = props
+    const { text, percentVaxxed } = props
 
     return (
         <div className='marker' style={markerStyle}>

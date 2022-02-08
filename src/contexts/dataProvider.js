@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from 'react'
+import React, { useEffect, useState } from 'react'
 import { round } from 'mathjs'
 import axios from 'axios'
 
@@ -63,7 +63,7 @@ export default function DataProvider(props) {
 
     const statesUrl = 'https://api.covidactnow.org/v2/states.timeseries.json?apiKey='
 
-    const countiesUrl = `https://api.covidactnow.org/v2/counties.timeseries.json?apiKey=`
+    // const countiesUrl = `https://api.covidactnow.org/v2/counties.timeseries.json?apiKey=`
 
     const [countryData, setCountryData] = useState({})
     const [statePlaceholder, setStatePlaceholder] = useState('default')
@@ -155,6 +155,7 @@ export default function DataProvider(props) {
             selectedState,
             setSelectedState,
             statePlaceholder,
+            setStatePlaceholder,
             allStatesData,
             allStatesAbbrevArr,
             stateCombinedData, 

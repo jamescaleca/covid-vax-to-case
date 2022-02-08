@@ -37,23 +37,23 @@ export default function StateMap() {
         },
     }
 
-    const defaultMap = 
-        <div className='map'>
-            <GoogleMapReact
-                bootstrapURLKeys={{ 
-                    key: '',
-                    libraries: ['visualization']
-                }}
-                center={defaultCountryProps.center }
-                defaultZoom={defaultCountryProps.zoom}
-            >
-                <AnyReactComponent 
-                    lat={defaultCountryProps.center.lat}
-                    lng={defaultCountryProps.center.lng}
-                    text='My marker'
-                />
-            </GoogleMapReact>
-        </div>
+    // const defaultMap = 
+    //     <div className='map'>
+    //         <GoogleMapReact
+    //             bootstrapURLKeys={{ 
+    //                 key: '',
+    //                 libraries: ['visualization']
+    //             }}
+    //             center={defaultCountryProps.center }
+    //             defaultZoom={defaultCountryProps.zoom}
+    //         >
+    //             <AnyReactComponent 
+    //                 lat={defaultCountryProps.center.lat}
+    //                 lng={defaultCountryProps.center.lng}
+    //                 text='My marker'
+    //             />
+    //         </GoogleMapReact>
+    //     </div>
 
     const stateCoords = allStatesAbbrevArr.filter(state => {
         if(state.state === selectedState) {return state}

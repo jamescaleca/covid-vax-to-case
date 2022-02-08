@@ -5,7 +5,7 @@ import { round } from 'mathjs'
 import { DataContext } from '../contexts/dataProvider'
 
 export default function StateSelector(){
-    const { statePlaceholder, selectedState, countryView, toggleCountryView, setSelectedState, setStateCombinedData, allStatesAbbrevArr, resetState, homeButton } = useContext(DataContext)
+    const { statePlaceholder, selectedState, countryView, toggleCountryView, setSelectedState, setStateCombinedData, allStatesAbbrevArr, homeButton } = useContext(DataContext)
 
     let allStatesAbbrevDropDown = allStatesAbbrevArr.map(state => (
         <option key={state.state} value={`${state.state}`}>{state.state}</option>

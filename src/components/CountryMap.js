@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from 'react'
+import React, { useContext } from 'react'
 import GoogleMapReact from 'google-map-react'
 import Marker from './Marker.js'
 import { round } from 'mathjs'
@@ -36,23 +36,23 @@ export default function CountryMap() {
         }
     }
 
-    const defaultMap = 
-        <div className='map'>
-            <GoogleMapReact
-                bootstrapURLKeys={{ 
-                    key: '',
-                    libraries: ['visualization']
-                }}
-                center={defaultCountryProps.center }
-                defaultZoom={defaultCountryProps.zoom}
-            >
-                <AnyReactComponent 
-                    lat={defaultCountryProps.center.lat}
-                    lng={defaultCountryProps.center.lng}
-                    text='My marker'
-                />
-            </GoogleMapReact>
-        </div>
+    // const defaultMap = 
+    //     <div className='map'>
+    //         <GoogleMapReact
+    //             bootstrapURLKeys={{ 
+    //                 key: '',
+    //                 libraries: ['visualization']
+    //             }}
+    //             center={defaultCountryProps.center }
+    //             defaultZoom={defaultCountryProps.zoom}
+    //         >
+    //             <AnyReactComponent 
+    //                 lat={defaultCountryProps.center.lat}
+    //                 lng={defaultCountryProps.center.lng}
+    //                 text='My marker'
+    //             />
+    //         </GoogleMapReact>
+    //     </div>
 
     return (
         <div className='map' >
