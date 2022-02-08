@@ -4,7 +4,7 @@ import Marker from './Marker.js'
 import { round } from 'mathjs'
 import { DataContext } from '../contexts/dataProvider'
 
-const AnyReactComponent = ({ text }) => <div>{text}</div>
+// const AnyReactComponent = ({ text }) => <div>{text}</div>
 
 export default function CountryMap() {
     const defaultCountryProps = {

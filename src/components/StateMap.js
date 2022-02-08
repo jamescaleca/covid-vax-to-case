@@ -4,7 +4,7 @@ import Marker from './Marker.js'
 import { round } from 'mathjs'
 import { DataContext } from '../contexts/dataProvider'
 
-const AnyReactComponent = ({ text }) => <div>{text}</div>
+// const AnyReactComponent = ({ text }) => <div>{text}</div>
 
 export default function StateMap() {
     const { stateCombinedData, allStatesAbbrevArr, selectedState } = useContext(DataContext)
@@ -21,13 +21,13 @@ export default function StateMap() {
         )}
     })
 
-    const defaultCountryProps = {
-        center: {
-            lat: 39.5,
-            lng: -98.35
-        },
-        zoom: 4.5
-    }
+    // const defaultCountryProps = {
+    //     center: {
+    //         lat: 39.5,
+    //         lng: -98.35
+    //     },
+    //     zoom: 4.5
+    // }
 
     let stateHeatMapData = {
         positions: tempStateMapData,
