@@ -63,7 +63,7 @@ export default function StateMap() {
         <div className='map' >
             <GoogleMapReact
                 bootstrapURLKeys={{ 
-                    key: '',
+                    key: `{process.env.REACT_APP_GOOGLE_API_KEY}`,
                     libraries: ['visualization']
                 }}
                 center={{

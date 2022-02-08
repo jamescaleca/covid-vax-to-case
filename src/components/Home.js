@@ -8,7 +8,6 @@ import '../css/styles.css'
 function Home() {
     const { countryData, toggleCountryView } = useContext(DataContext)
 
-
     const aboutMap = (
         <li className='about-map'>
             <p>The more red a county appears on the map, the higher the percentage of that area's population is vaccinated.</p>

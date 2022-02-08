@@ -61,7 +61,7 @@ export default function DataProvider(props) {
         {state: 'WY', lat: 43.0760, lng: -107.2903} 
     ]
 
-    const statesUrl = 'https://api.covidactnow.org/v2/states.timeseries.json?apiKey='
+    const statesUrl = `https://api.covidactnow.org/v2/states.timeseries.json?apiKey={process.env.REACT_APP_COVID_KEY}`
 
     // const countiesUrl = `https://api.covidactnow.org/v2/counties.timeseries.json?apiKey=`
 
@@ -95,7 +95,7 @@ export default function DataProvider(props) {
 
     const getCountryData = () => {
         axios
-            .get('https://api.covidactnow.org/v2/country/US.timeseries.json?apiKey=')
+            .get(`https://api.covidactnow.org/v2/country/US.timeseries.json?apiKey={process.env.REACT_APP_COVID_KEY}`)
             .then(res => {
                 return setCountryData({
                     population: res.data.population.toLocaleString(),
