@@ -9,20 +9,16 @@ console.log(process.env.REACT_APP_COVID_KEY)
 export default function App(){
     return (
         <div className='app'>
-            
             <Switch>
-                <Route 
-                    exact path='/'
-                    component={Home}
-                />
-                <Route 
-                    exact path='/state'
-                    component={StateSelector}
-                />
-                <Route 
-                    exact path='/state/:selectedState'
-                    component={State}
-                />
+                <Route exact path='/'>
+                    <Home />
+                </Route>
+                <Route exact path='/state'>
+                    <StateSelector />
+                </Route>
+                <Route exact path='/state/:selectedState'>
+                    <State />
+                </Route>
             </Switch>
         </div>
     )
