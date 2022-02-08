@@ -7,8 +7,8 @@ import CountryData from './CountryData'
 import StateData from './StateData'
 import '../css/styles.css'
 
-function Home() {
-    const { countryView, countryData, stateCombinedData, toggleCountryView } = useContext(DataContext)
+function State() {
+    const { setSelectedState, setStateCombinedData, toggleCountryView, resetState, homeButton } = useContext(DataContext)
 
 
     const aboutMap = (
@@ -34,21 +34,22 @@ function Home() {
             <div id='home-page-title'>
                 <h1>Welcome</h1>
             </div>
+            
+        <ul className='main-content'>
+            <li className='data-block'><StateData /></li>
             <Link to='/state'>
-                <button onClick={() => toggleCountryView()}>
-                    View a specific state
-                </button>
+                <button onClick={resetState}>Go back to state selection</button>
             </Link>
-            { countryData === {} ? <h1>Loading...</h1> :
-                <ul className='main-content'>
-                    <li className='data-block'><CountryData /></li>
-                </ul>
-            }
-            <CountryMap />
-            {aboutMap}
-            {footer}
-        </div>
+            <Link to='/'>
+                <button onClick={homeButton}>Back to home</button>
+            </Link>
+        </ul>
+
+        <StateMap />
+        {aboutMap}
+        {footer}
+        </div> 
     )
 }
 
-export default Home
+export default State

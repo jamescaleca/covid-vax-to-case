@@ -1,6 +1,5 @@
 import React, { useEffect, useState, useContext } from 'react'
 import { round } from 'mathjs'
-import { UserContext } from './userProvider'
 import axios from 'axios'
 
 export const DataContext = React.createContext()
@@ -66,67 +65,27 @@ export default function DataProvider(props) {
 
     const countiesUrl = `https://api.covidactnow.org/v2/counties.timeseries.json?apiKey=`
 
-    const [inputs, setInputs] = useState(initInputs)
-    const [toggle, setToggle] = useState(false)
     const [countryData, setCountryData] = useState({})
     const [statePlaceholder, setStatePlaceholder] = useState('default')
     const [selectedState, setSelectedState] = useState('')
     const [countryView, setCountryView] = useState(true)
-    const [diffStateView, setDiffStateView] = useState(false)
     const [allStatesData, setAllStatesData] = useState([])
-    const [countyCoordsData, setCountyCoordsData] = useState([])
-    const [stateCountiesCoords, setStateCountiesCoords] = useState([])
-    const [stateCountiesData, setStateCountiesData] = useState([])
-    const [stateResData, setStateResData] = useState([])
-    const [countyResData, setCountyResData] = useState([])
-    const [countyResCoords, setCountyResCoords] = useState([])
-    const [countiesCombinedData, setCountiesCombinedData] = useState([])
-    const [diffStateCombinedData, setDiffStateCombinedData] = useState([])
-    const [diffStateData, setDiffStateData] = useState({})
-
-    function handleChange(e) {
-        const {name, value} = e.target
-        setInputs(prevInputs => ({
-            ...prevInputs,
-            [name]: value
-        }))
-    }
+    const [stateCombinedData, setStateCombinedData] = useState([])
 
     function toggleCountryView() {
         return setCountryView(prev => !prev)
     }
 
-    const countyData = countiesCombinedData.map(county => ({
-        lat: county.coordinates[1],
-        lng: county.coordinates[0],
-        weight: county.percentVaxxed
-    }))
-
-    let diffStateSelectData = allStatesData.filter(state => {
-        if(state.name === selectedState) {
-            return state
-        }
-    })
-
-    console.log(diffStateSelectData)
-
-    const diffStateMapData = diffStateCombinedData.map(county => {
-        return {
-            lat: county.coordinates[1],
-            lng: county.coordinates[0],
-            weight: round( county.vaxCompleted / 
-                county.population * 100, 2)
-        }
-    })
-
-    const diffStateHeatMapData = {
-        positions: diffStateMapData,
-        options: {
-            radius: 90,
-            opacity: .5
-        }
+    function resetState() {
+        setSelectedState('')
+        setStateCombinedData([])
     }
-    console.log(diffStateHeatMapData)
+
+    function homeButton() {
+        toggleCountryView()
+        resetState()
+    }
+
 
     const diffStateCoords = allStatesAbbrevArr.filter(state => {
         if(state.state === selectedState){
@@ -139,9 +98,9 @@ export default function DataProvider(props) {
             .get('https://api.covidactnow.org/v2/country/US.timeseries.json?apiKey=')
             .then(res => {
                 return setCountryData({
-                    population: res.data.population,
-                    cases: res.data.actuals.cases,
-                    vaxCompleted: res.data.actuals.vaccinationsCompleted,
+                    population: res.data.population.toLocaleString(),
+                    cases: res.data.actuals.cases.toLocaleString(),
+                    vaxCompleted: res.data.actuals.vaccinationsCompleted.toLocaleString(),
                     percentVaxxed: round(
                         res.data.actuals.vaccinationsCompleted /
                         res.data.population * 100, 2
@@ -151,166 +110,57 @@ export default function DataProvider(props) {
             .catch(err => console.log(err))
     }
 
-    // const getStateResData = () => {
-    //     axios
-    //         .get('/api')
-    //         .then(res => {
-    //             res.data.filter(state => {
-    //                 if(state.name === stateRes){
-    //                     console.log(stateRes)
-    //                     return setStateResData((prevState) => ({
-    //                         ...prevState,
-    //                         ...state
-    //                     }))
-    //                 }
-    //             })
-    //         })
-    //         .catch(err => console.log(err))
-    // }
-
-    const getAllCountiesCovidData = () => {
+    const getAllStatesData = () => {
         axios
-            .get(`https://api.covidactnow.org/v2/county/${stateRes}.timeseries.json?apiKey=`)
+            .get(statesUrl)
             .then(res => {
-                res.data.map(county => {
-                    return setCountiesCombinedData(prevState => ([
-                        ...prevState,
-                        {
-                            county: county.county,
-                            show: false,
-                            vaxCompleted: county.actuals.vaccinationsCompleted,
-                            population: county.population,
-                            percentVaxxed: round(
-                                county.actuals.vaccinationsCompleted / 
-                                county.population * 100, 2
-                            ),
-                            coordinates: []
-                        }
-                    ]))
-                })
-            })
-            .catch(err => console.log(err))
-    }
-
-    const getCountyResData = () => {
-        axios
-            .get(`https://api.covidactnow.org/v2/county/${stateRes}.timeseries.json?apiKey=`)
-            .then(res => {
-                res.data.filter(county => {
-                    if(county.county === countyRes.county){
-                        return setCountyResData(prevCounty => ({
-                            ...prevCounty,
-                            ...county
-                        }))
-                    }
-                })
-            })
-            .catch(err => console.log(err))
-    }
-
-    const combineCoordsAndCovidData = () => {
-        axios
-            .get(`https://public.opendatasoft.com/api/records/1.0/search/?dataset=us-county-boundaries&q=&rows=300&refine.stusab=${stateRes}`)
-            .then(res => 
-                setCountiesCombinedData(prevCounty => {
-                    const map = {}
-                    for(let i = 0; i < res.data.records.length; i++){
-                        map[res.data.records[i].fields.namelsad] = res.data.records[i].geometry.coordinates
-                    }
-                    return prevCounty.map(county => {
-                        return {
-                            ...county,
-                            coordinates: map[county.county]
+                let statesArray = res.data.map(state => ({
+                    name: state.state,
+                    population: state.population,
+                    cases: state.actuals.cases,
+                    vaxDist: state.actuals.vaccinesDistributed,
+                    vaxCompleted: state.actuals.vaccinationsCompleted,
+                    coordinates: allStatesAbbrevArr.filter(stateAbbr => {
+                        if(state.state === stateAbbr.state){
+                            return stateAbbr.lat, stateAbbr.lng
                         }
                     })
-                })
-            )
-            .catch(err => console.log(err))
-    }
-
-    const getAllStateCountiesCoords = () => {
-        axios
-            .get(`https://public.opendatasoft.com/api/records/1.0/search/?dataset=us-county-boundaries&q=&rows=300&refine.stusab=${stateRes}`)
-            .then(res => {
-                const countyCoords = res.data.records.map(county => {
-                    return {
-                        coordinates: county.geometry.coordinates, 
-                        countyName: county.fields.namelsad
-                    }
-                })
-                const countyResCoordsFilt = countyCoords.filter(county => {
-                    if(county.countyName === countyRes.county){return county}
-                })
-                setStateCountiesCoords(countyCoords)
-                setCountyResCoords(countyResCoordsFilt)
+                }))
+                return setAllStatesData(statesArray)
             })
             .catch(err => console.log(err))
     }
 
     useEffect(() => {
-        // getAllStatesData()
-        // getStateResData()
-        getAllCountiesCovidData()
-        getCountyResData()
-        getAllStateCountiesCoords()
-        combineCoordsAndCovidData()
         getCountryData()
+        getAllStatesData()
     }, [])
 
-    // console.log(stateCountiesData)
-
-    const onChildClickCallback = (countyName) => {
-        setCountiesCombinedData(prevCounties => {
-            countiesCombinedData.filter(county => {
-                if(countyName === county.county){
-                    return county.show = !county.show
-                }
-            })
+    // const onChildClickCallback = (countyName) => {
+    //     setCountiesCombinedData(prevCounties => {
+    //         countiesCombinedData.filter(county => {
+    //             if(countyName === county.county){
+    //                 return county.show = !county.show
+    //             }
+    //         })
             
-        })
-    }
+    //     })
+    // }
 
     return (
         <DataContext.Provider value={{
-            inputs,
-            setInputs,
-            toggle,
-            setToggle,
-            handleChange,
-            handleSignup,
-            handleLogin,
-            toggleForm,
-            initInputs,
             toggleCountryView,
-            // toggleDiffStateView,
             countryData,
-            countyData,
             countryView,
-            diffStateView,
-            setDiffStateView,
             selectedState,
             setSelectedState,
             statePlaceholder,
-            getStateResData,
             allStatesData,
             allStatesAbbrevArr,
-            getAllStateCountiesCoords,
-            setStateResData,
-            countyCoordsData,
-            stateCountiesCoords,
-            stateCountiesData,
-            stateResData,
-            countyResData,
-            countyResCoords,
-            countiesCombinedData,
-            onChildClickCallback,
-            diffStateCombinedData, 
-            setDiffStateCombinedData,
-            diffStateData,
-            setDiffStateData,
-            diffStateSelectData,
-            diffStateMapData,
-            diffStateHeatMapData,
+            stateCombinedData, 
+            setStateCombinedData,
+            resetState,
+            homeButton,
             diffStateCoords
         }}>{props.children}
         </DataContext.Provider>
