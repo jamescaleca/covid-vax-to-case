@@ -14,7 +14,7 @@ export default function StateSelector(){
     function handleStateChange(e) {
         const { value } = e.target
         axios
-            .get(`https://api.covidactnow.org/v2/county/${value}.timeseries.json?apiKey={process.env.REACT_APP_COVID_KEY}`)
+            .get(`https://api.covidactnow.org/v2/county/${value}.timeseries.json?apiKey=${process.env.REACT_APP_COVID_KEY}`)
             .then(res => {
                 if(countryView === true){
                     toggleCountryView()
