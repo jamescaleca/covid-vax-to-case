@@ -9,20 +9,17 @@ import { DataContext } from '../contexts/dataProvider'
 export default function StateMap() {
     const { stateCombinedData, allStatesAbbrevArr, selectedState } = useContext(DataContext)
 
-    let tempStateMapData = stateCombinedData.map(county => {
-        if(county.coordinates !== undefined || county !== undefined){
-            return(
-            {
-                lat: county.coordinates[1],
-                lng: county.coordinates[0],
-                weight: round( county.vaxCompleted / 
-                    county.population * 100, 2)
-            }
-        )}
-        return county
-    })
+    // const tempStateMapData = stateCombinedData.map(county => {
+    //     // county.coordinates !== undefined || county !== undefined
+    //     return {
+    //         lat: county.coordinates[1],
+    //         lng: county.coordinates[0],
+    //         weight: round( county.vaxCompleted / 
+    //             county.population * 100, 2)
+    //     }
+    // })
 
-    console.log(tempStateMapData)
+
 
     // const defaultCountryProps = {
     //     center: {
@@ -33,12 +30,21 @@ export default function StateMap() {
     // }
 
     let stateHeatMapData = {
-        positions: tempStateMapData,
+        positions: stateCombinedData.map(county => {
+            return {
+            lat: county.coordinates[1],
+            lng: county.coordinates[0],
+            weight: round( county.vaxCompleted / 
+                county.population * 100, 2)
+            }
+        }),
         options: {
             radius: 90,
             opacity: .5
         },
     }
+
+    console.log(stateHeatMapData)
 
     // const defaultMap = 
     //     <div className='map'>
@@ -57,6 +63,8 @@ export default function StateMap() {
     //             />
     //         </GoogleMapReact>
     //     </div>
+
+    // MAYBE TRY A USEEFFECT THAT CALLS A FUNCTION THAT FIRES THE .MAP METHOD
 
     const stateCoords = allStatesAbbrevArr.filter(state => state.state === selectedState)
 
