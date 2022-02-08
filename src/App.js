@@ -4,6 +4,9 @@ import Home from './components/Home'
 import State from './components/State'
 import StateSelector from './components/StateSelector'
 
+console.log(process.env.REACT_APP_GOOGLE_API_KEY)
+console.log(process.env.REACT_APP_COVID_KEY)
+
 export default function App(){
     return (
         <div className='app'>
