@@ -87,11 +87,7 @@ export default function DataProvider(props) {
     }
 
 
-    const diffStateCoords = allStatesAbbrevArr.filter(state => {
-        if(state.state === selectedState){
-            return state
-        }
-    })
+    const diffStateCoords = allStatesAbbrevArr.filter(state => state.state === selectedState)
 
     const getCountryData = () => {
         axios
@@ -122,8 +118,8 @@ export default function DataProvider(props) {
                     vaxCompleted: state.actuals.vaccinationsCompleted,
                     coordinates: allStatesAbbrevArr.filter(stateAbbr => {
                         if(state.state === stateAbbr.state){
-                            return stateAbbr.lat, stateAbbr.lng
-                        }
+                            return (stateAbbr.lat, stateAbbr.lng)
+                        } else return null
                     })
                 }))
                 return setAllStatesData(statesArray)
@@ -134,7 +130,7 @@ export default function DataProvider(props) {
     useEffect(() => {
         getCountryData()
         getAllStatesData()
-    }, [])
+    })
 
     // const onChildClickCallback = (countyName) => {
     //     setCountiesCombinedData(prevCounties => {

@@ -19,7 +19,10 @@ export default function StateMap() {
                     county.population * 100, 2)
             }
         )}
+        return county
     })
+
+    console.log(tempStateMapData)
 
     // const defaultCountryProps = {
     //     center: {
@@ -55,9 +58,7 @@ export default function StateMap() {
     //         </GoogleMapReact>
     //     </div>
 
-    const stateCoords = allStatesAbbrevArr.filter(state => {
-        if(state.state === selectedState) {return state}
-    })
+    const stateCoords = allStatesAbbrevArr.filter(state => state.state === selectedState)
 
     return (
         <div className='map' >
