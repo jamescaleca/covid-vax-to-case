@@ -5,11 +5,9 @@ import { DataContext } from '../contexts/dataProvider'
 export default function StateData() {
     const { stateCombinedData, selectedState, allStatesData } = useContext(DataContext)
 
-    let currentState = allStatesData.filter(state => {
-        if(selectedState === state.name) {
-            return state
-        }
-    })
+    let currentState = allStatesData.filter(state => 
+        selectedState === state.name
+    )
 
     return (
         <>
