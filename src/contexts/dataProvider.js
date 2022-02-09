@@ -63,8 +63,6 @@ export default function DataProvider(props) {
 
     const statesUrl = `https://api.covidactnow.org/v2/states.timeseries.json?apiKey=${process.env.REACT_APP_COVID_KEY}`
 
-    // const countiesUrl = `https://api.covidactnow.org/v2/counties.timeseries.json?apiKey=`
-
     const [countryData, setCountryData] = useState({})
     const [statePlaceholder, setStatePlaceholder] = useState('default')
     const [selectedState, setSelectedState] = useState('')
@@ -141,7 +139,6 @@ export default function DataProvider(props) {
     //                 return county.show = !county.show
     //             }
     //         })
-            
     //     })
     // }
 

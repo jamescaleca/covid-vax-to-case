@@ -1,8 +1,8 @@
 $canvas: #030303;
 $element: #1A1A1B;
 
-$font-title: rgb(233, 233, 233);
-$font-descr: rgb(206, 206, 206); 
+$font-title: rgb(206, 38, 38);
+$font-descr: firebrick; 
 $marker-font: rgb(19, 19, 19);
 
 * {
@@ -21,19 +21,20 @@ $marker-font: rgb(19, 19, 19);
     padding-bottom: 3em;
     background-color: $canvas;
     color: $font-descr;
-    height: auto;
+    height: 150vh;
+
+    button {
+        background-color: $element;
+        color: firebrick;
+        padding: 3px 8px;
+        border-radius: 2%;
+    }
 
     #navbar {
         display: flex;
         justify-content: space-around;
         align-items: center;
         height: 2.5em;
-        button {
-            background-color: $element;
-            color: firebrick;
-            padding: 3px 8px;
-            border-radius: 2%;
-        }
         p {
             color: firebrick;
             i {
@@ -45,7 +46,6 @@ $marker-font: rgb(19, 19, 19);
     .home {
         display: flex;
         flex-direction: column;
-        height: 150vh;
         
         align-items: center;
         #home-page-title {
@@ -68,7 +68,6 @@ $marker-font: rgb(19, 19, 19);
             .marker {
                 color: $marker-font;
             }
-            
         }
         .main-content {
             display: flex;
@@ -99,6 +98,20 @@ $marker-font: rgb(19, 19, 19);
 
             }
         }
-        
+    }
+
+    #state-selector {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: 10em;
+        flex-direction: column;
+        color: firebrick;
+        select {
+            background-color: $element;
+            color: firebrick;
+            width: 10em;
+            height: 2em;
+        }
     }
 }

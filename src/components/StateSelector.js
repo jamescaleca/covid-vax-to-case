@@ -65,7 +65,7 @@ export default function StateSelector(){
 
 
     return (
-        <>
+        <div id='state-selector'>
             <label htmlFor='stateSelect'>Choose a state:</label>
             <select 
                 defaultValue={statePlaceholder}
@@ -90,6 +90,6 @@ export default function StateSelector(){
             <Link to='/'>
                 <button onClick={homeButton}>Back to home</button>
             </Link>
-        </>
+        </div>
     )
 }
