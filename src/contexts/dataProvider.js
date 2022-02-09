@@ -5,7 +5,7 @@ import axios from 'axios'
 export const DataContext = React.createContext()
 
 export default function DataProvider(props) {
-    const allStatesAbbrevArr = [ 
+    const allStatesAbbrevCoord = [ 
         {state: 'AK', lat: 64.2008, lng: -149.4937},
         {state: 'AL', lat: 32.3182, lng: -86.9023},
         {state: 'AR', lat: 35.2010, lng: -91.8318},
@@ -71,6 +71,7 @@ export default function DataProvider(props) {
     const [countryView, setCountryView] = useState(true)
     const [allStatesData, setAllStatesData] = useState([])
     const [stateCombinedData, setStateCombinedData] = useState([])
+    const [ allStatesAbbrevArr ] = useState(allStatesAbbrevCoord)
 
     function toggleCountryView() {
         return setCountryView(prev => !prev)
@@ -106,31 +107,32 @@ export default function DataProvider(props) {
             .catch(err => console.log(err))
     }
 
-    function getAllStatesData() {
-        axios
-            .get(statesUrl)
-            .then(res => {
-                const statesArray = res.data.map(state => ({
-                    name: state.state,
-                    population: state.population,
-                    cases: state.actuals.cases,
-                    vaxDist: state.actuals.vaccinesDistributed,
-                    vaxCompleted: state.actuals.vaccinationsCompleted,
-                    coordinates: allStatesAbbrevArr.filter(stateAbbr => {
-                        if(state.state === stateAbbr.state){
-                            return (stateAbbr.lat, stateAbbr.lng)
-                        } else return null
-                    })
-                }))
-                return setAllStatesData(statesArray)
-            })
-            .catch(err => console.log(err))
-    }
+
 
     useEffect(() => {
+        function getAllStatesData() {
+            axios
+                .get(statesUrl)
+                .then(res => {
+                    const statesArray = res.data.map(state => ({
+                        name: state.state,
+                        population: state.population,
+                        cases: state.actuals.cases,
+                        vaxDist: state.actuals.vaccinesDistributed,
+                        vaxCompleted: state.actuals.vaccinationsCompleted,
+                        coordinates: allStatesAbbrevArr.filter(stateAbbr => {
+                            if(state.state === stateAbbr.state){
+                                return (stateAbbr.lat, stateAbbr.lng)
+                            } else return null
+                        })
+                    }))
+                    return setAllStatesData(statesArray)
+                })
+                .catch(err => console.log(err))
+        }
         getCountryData()
         getAllStatesData()
-    }, [])
+    }, [ allStatesAbbrevArr, statesUrl ])
 
     // const onChildClickCallback = (countyName) => {
     //     setCountiesCombinedData(prevCounties => {
