@@ -1,70 +1,25 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState, useEffect } from 'react'
 import GoogleMapReact from 'google-map-react'
 import Marker from './Marker.js'
-import { round } from 'mathjs'
 import { DataContext } from '../contexts/dataProvider'
 
-// const AnyReactComponent = ({ text }) => <div>{text}</div>
-
-export default function StateMap() {
+export default function StateMap(props) {
     const { stateCombinedData, allStatesAbbrevArr, selectedState } = useContext(DataContext)
 
-    // const tempStateMapData = stateCombinedData.map(county => {
-    //     // county.coordinates !== undefined || county !== undefined
-    //     return {
-    //         lat: county.coordinates[1],
-    //         lng: county.coordinates[0],
-    //         weight: round( county.vaxCompleted / 
-    //             county.population * 100, 2)
-    //     }
-    // })
+    const [ heatMapData, setHeatMapData ] = useState([])
 
+    const { mappedData } = props
 
-
-    // const defaultCountryProps = {
-    //     center: {
-    //         lat: 39.5,
-    //         lng: -98.35
-    //     },
-    //     zoom: 4.5
-    // }
-
-    let stateHeatMapData = {
-        positions: stateCombinedData.map(county => {
-            return {
-            lat: county.coordinates[1],
-            lng: county.coordinates[0],
-            weight: round( county.vaxCompleted / 
-                county.population * 100, 2)
-            }
-        }),
-        options: {
-            radius: 90,
-            opacity: .5
-        },
-    }
-
-    console.log(stateHeatMapData)
-
-    // const defaultMap = 
-    //     <div className='map'>
-    //         <GoogleMapReact
-    //             bootstrapURLKeys={{ 
-    //                 key: '',
-    //                 libraries: ['visualization']
-    //             }}
-    //             center={defaultCountryProps.center }
-    //             defaultZoom={defaultCountryProps.zoom}
-    //         >
-    //             <AnyReactComponent 
-    //                 lat={defaultCountryProps.center.lat}
-    //                 lng={defaultCountryProps.center.lng}
-    //                 text='My marker'
-    //             />
-    //         </GoogleMapReact>
-    //     </div>
-
-    // MAYBE TRY A USEEFFECT THAT CALLS A FUNCTION THAT FIRES THE .MAP METHOD
+    useEffect(() => {
+        function heatMapFunc() {
+            const mapOptions = { radius: 90, opacity: .5 }
+            return setHeatMapData({
+                positions: mappedData,
+                options: mapOptions
+            })
+        }
+        heatMapFunc()
+    }, [ mappedData ])
 
     const stateCoords = allStatesAbbrevArr.filter(state => state.state === selectedState)
 
@@ -80,7 +35,7 @@ export default function StateMap() {
                     lng: stateCoords[0].lng
                 }}
                 defaultZoom={8}
-                heatmap={stateHeatMapData}
+                heatmap={heatMapData}
             >
                 {stateCombinedData.map(county => (
                     <Marker 

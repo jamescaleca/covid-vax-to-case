@@ -66,34 +66,30 @@ export default function StateSelector(){
 
     return (
         <>
-            <div>
-                <label htmlFor='stateSelect'>Choose a state:</label>
-                <select 
-                    defaultValue={statePlaceholder}
-                    name='stateSelect'
-                    id='stateSelect'
-                    value={selectedState.value}
-                    onChange={
-                        handleStateChange
-                    }
-                ><option value='default' hidden disabled>State</option>{allStatesAbbrevDropDown}
-                </select>
-                {
-                    selectedState !== '' ?
-                    <Link to={`/state/${selectedState}`}>
-                        <button>
-                            Click here to view heatmap and data for {selectedState}
-                        </button>
-                    </Link>
-                    : null
+            <label htmlFor='stateSelect'>Choose a state:</label>
+            <select 
+                defaultValue={statePlaceholder}
+                name='stateSelect'
+                id='stateSelect'
+                value={selectedState.value}
+                onChange={
+                    handleStateChange
                 }
-
-                <Link to='/'>
-                    <button onClick={homeButton}>Back to home</button>
+            ><option value='default' hidden disabled>State</option>{allStatesAbbrevDropDown}
+            </select>
+            {
+                selectedState !== '' ?
+                <Link to={`/state/${selectedState}`}>
+                    <button>
+                        Click here to view heatmap and data for {selectedState}
+                    </button>
                 </Link>
-            </div>
-        </>
+                : null
+            }
 
-        
+            <Link to='/'>
+                <button onClick={homeButton}>Back to home</button>
+            </Link>
+        </>
     )
 }

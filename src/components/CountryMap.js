@@ -1,12 +1,16 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState, useEffect } from 'react'
 import GoogleMapReact from 'google-map-react'
 import Marker from './Marker.js'
 import { round } from 'mathjs'
 import { DataContext } from '../contexts/dataProvider'
 
-// const AnyReactComponent = ({ text }) => <div>{text}</div>
+export default function CountryMap(props) {
+    const { allStatesData, } = useContext(DataContext)
 
-export default function CountryMap() {
+    const [ heatMapData, setHeatMapData ] = useState([])
+
+    const { mappedData } = props
+
     const defaultCountryProps = {
         center: {
             lat: 39.5,
@@ -15,44 +19,16 @@ export default function CountryMap() {
         zoom: 4.5
     }
 
-    const { onChildClickCallback, allStatesData, } = useContext(DataContext)
-
-
-    const allStatesMappedData = allStatesData.map(state => {
-        return {
-            lat: state.coordinates[0].lat,
-            lng: state.coordinates[0].lng,
-            weight: round( state.vaxCompleted / 
-                state.population * 100, 2
-            )
+    useEffect(() => {
+        function heatMapFunc() {
+            const mapOptions = { radius: 100, opacity: .5 }
+            return setHeatMapData({
+                positions: mappedData,
+                options: mapOptions
+            })
         }
-    })
-
-    const countryHeatMapData = {
-        positions: allStatesMappedData,
-        options: {
-            radius: 100,
-            opacity: .5
-        }
-    }
-
-    // const defaultMap = 
-    //     <div className='map'>
-    //         <GoogleMapReact
-    //             bootstrapURLKeys={{ 
-    //                 key: '',
-    //                 libraries: ['visualization']
-    //             }}
-    //             center={defaultCountryProps.center }
-    //             defaultZoom={defaultCountryProps.zoom}
-    //         >
-    //             <AnyReactComponent 
-    //                 lat={defaultCountryProps.center.lat}
-    //                 lng={defaultCountryProps.center.lng}
-    //                 text='My marker'
-    //             />
-    //         </GoogleMapReact>
-    //     </div>
+        heatMapFunc()
+    }, [ mappedData ])
 
     return (
         <div className='map' >
@@ -66,8 +42,7 @@ export default function CountryMap() {
                     lng: defaultCountryProps.center.lng
                 }}
                 defaultZoom={5}
-                heatmap={countryHeatMapData}
-                onChildClick={onChildClickCallback}
+                heatmap={heatMapData}
             >
                 {allStatesData.map(state => (
                     <Marker 

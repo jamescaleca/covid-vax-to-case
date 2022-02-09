@@ -89,7 +89,7 @@ export default function DataProvider(props) {
 
     const diffStateCoords = allStatesAbbrevArr.filter(state => state.state === selectedState)
 
-    const getCountryData = () => {
+    function getCountryData() {
         axios
             .get(`https://api.covidactnow.org/v2/country/US.timeseries.json?apiKey=${process.env.REACT_APP_COVID_KEY}`)
             .then(res => {
@@ -106,11 +106,11 @@ export default function DataProvider(props) {
             .catch(err => console.log(err))
     }
 
-    const getAllStatesData = () => {
+    function getAllStatesData() {
         axios
             .get(statesUrl)
             .then(res => {
-                let statesArray = res.data.map(state => ({
+                const statesArray = res.data.map(state => ({
                     name: state.state,
                     population: state.population,
                     cases: state.actuals.cases,
@@ -130,7 +130,7 @@ export default function DataProvider(props) {
     useEffect(() => {
         getCountryData()
         getAllStatesData()
-    })
+    }, [])
 
     // const onChildClickCallback = (countyName) => {
     //     setCountiesCombinedData(prevCounties => {
