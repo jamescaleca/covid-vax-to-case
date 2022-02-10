@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+
 import { round } from 'mathjs'
 import axios from 'axios'
 
@@ -95,9 +96,7 @@ export default function DataProvider(props) {
     const [ aboutMap ] = useState(about)
     const [ mapFooter ] = useState(footer)
 
-    function toggleCountryView() {
-        return setCountryView(prev => !prev)
-    }
+    function toggleCountryView(){setCountryView(prev => !prev)}
 
     function resetState() {
         setSelectedState('')
@@ -111,29 +110,32 @@ export default function DataProvider(props) {
 
     const diffStateCoords = allStatesAbbrevArr.filter(state => state.state === selectedState)
 
-    function getCountryData() {
-        axios
-            .get(`https://api.covidactnow.org/v2/country/US.timeseries.json?apiKey=${process.env.REACT_APP_COVID_KEY}`)
-            .then(res => {
-                return setCountryData({
-                    population: res.data.population.toLocaleString(),
-                    cases: res.data.actuals.cases.toLocaleString(),
-                    vaxCompleted: res.data.actuals.vaccinationsCompleted.toLocaleString(),
-                    percentVaxxed: round(
-                        res.data.actuals.vaccinationsCompleted /
-                        res.data.population * 100, 2
-                    )
-                })
-            })
-            .catch(err => console.log(err))
-    }
-
     useEffect(() => {
+        function getCountryData() {
+            axios
+                .get(`https://api.covidactnow.org/v2/country/US.timeseries.json?apiKey=${process.env.REACT_APP_COVID_KEY}`)
+                .then(res => {
+                    const { population } = res.data
+                    const { cases, vaccinationsCompleted } = res.data.actuals
+    
+                    return setCountryData({
+                        population: population.toLocaleString(),
+                        cases: cases.toLocaleString(),
+                        vaxCompleted: vaccinationsCompleted.toLocaleString(),
+                        percentVaxxed: round(
+                            vaccinationsCompleted /
+                            population * 100, 2
+                        )
+                    })
+                })
+                .catch(err => console.log(err))
+        }
         function getAllStatesData() {
             axios
                 .get(statesUrl)
                 .then(res => {
-                    const statesArray = res.data.map(state => ({
+                    const statesArray = res.data.map(state => 
+                    ({
                         name: state.state,
                         population: state.population,
                         cases: state.actuals.cases,
