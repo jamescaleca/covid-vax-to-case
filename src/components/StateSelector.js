@@ -5,7 +5,16 @@ import { round } from 'mathjs'
 import { DataContext } from '../contexts/dataProvider'
 
 export default function StateSelector(){
-    const { statePlaceholder, selectedState, countryView, toggleCountryView, setSelectedState, setStateCombinedData, allStatesAbbrevArr, homeButton } = useContext(DataContext)
+    const { 
+        statePlaceholder, 
+        selectedState, 
+        countryView, 
+        toggleCountryView, 
+        setSelectedState, 
+        setStateCombinedData, 
+        allStatesAbbrevArr, 
+        homeButton 
+    } = useContext(DataContext)
 
     let allStatesAbbrevDropDown = allStatesAbbrevArr.map(state => (
         <option key={state.state} value={`${state.state}`}>{state.state}</option>
@@ -16,11 +25,8 @@ export default function StateSelector(){
         axios
             .get(`https://api.covidactnow.org/v2/county/${value}.timeseries.json?apiKey=${process.env.REACT_APP_COVID_KEY}`)
             .then(res => {
-                if(countryView === true){
-                    toggleCountryView()
-                }
+                if(countryView === true) toggleCountryView()
                 setSelectedState(value)
-                
                 res.data.map(county => {
                     return setStateCombinedData(prevState => ([
                         ...prevState,
@@ -62,7 +68,6 @@ export default function StateSelector(){
             )
             .catch(err => console.log(err))
     }
-
 
     return (
         <div id='state-selector'>

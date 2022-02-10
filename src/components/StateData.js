@@ -9,6 +9,8 @@ export default function StateData() {
         selectedState === state.name
     )
 
+    const { population, vaxCompleted, cases } = currentState[0]
+
     return (
         <>
         {stateCombinedData.length > 0 ?
@@ -16,18 +18,17 @@ export default function StateData() {
                 <li>
                     <h2>Data for {selectedState}:</h2>
                 </li>
-                <li>Population: <b>{currentState[0].population.toLocaleString()}</b></li>
+                <li>Population: <b>{population.toLocaleString()}</b></li>
                 <li>
-                    Vaccinations completed: <b>{currentState[0].vaxCompleted.toLocaleString()}</b>
+                    Vaccinations completed: <b>{vaxCompleted.toLocaleString()}</b>
                 </li>
                 <li>
-                    Total cases: <b>{currentState[0].cases.toLocaleString()}</b>
+                    Total cases: <b>{cases.toLocaleString()}</b>
                 </li>
                 <li>
                     Percentage of population fully vaccinated: 
                     <b> {' '}
-                        {round(currentState[0].vaxCompleted / 
-                            currentState[0].population * 100, 2)
+                        {round(vaxCompleted / population * 100, 2)
                         }%
                     </b>
                 </li>

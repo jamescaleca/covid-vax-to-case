@@ -7,27 +7,15 @@ import { round } from 'mathjs'
 import '../css/styles.css'
 
 function State() {
-    const { resetState, homeButton, stateCombinedData } = useContext(DataContext)
+    const { 
+        resetState, 
+        homeButton, 
+        stateCombinedData, 
+        aboutMap, 
+        mapFooter 
+    } = useContext(DataContext)
 
     const [ mappedData, setMappedData ] = useState([])
-
-    const aboutMap = (
-        <li className='about-map'>
-            <p>The more red a county appears on the map, the higher the percentage of that area's population is vaccinated.</p>
-            <p>The more green each area appears, the lower the percentage of the population is vaccinated.</p>
-        </li> 
-    )
-
-    const footer = (
-        <footer>
-            <p>COVID data courtesy of 
-                <a href='https://covidactnow.org'> Covid Act Now</a>
-            </p>
-            <p>Coordinates data courtesy of 
-                <a href='https://www.opendatasoft.com/'> opendatasoft</a>
-            </p>
-        </footer>
-    )
 
     useEffect(() => {
         function mapHeatMapData() {
@@ -61,8 +49,9 @@ function State() {
             </ul>
 
             <StateMap mappedData={mappedData} />
+            
             {aboutMap}
-            {footer}
+            {mapFooter}
         </div> 
     )
 }

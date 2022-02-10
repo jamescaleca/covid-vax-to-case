@@ -15,18 +15,20 @@ export default function InfoWindow(props)  {
 
     const { county } = props
 
+    const { county, population, vaxCompleted } = county
+
     return (
         <div style={infoWindowStyle}>
             <div style={{ fontSize: 16 }}>
-                {county.county}
+                {county}
             </div>
             <div style={{ fontSize: 14 }}>
                 <span style={{ color: 'grey' }}>
-                    <p>Population: {county.population}</p>
+                    <p>Population: {population}</p>
                     {' '}
                 </span>
                 <span style={{ color: 'grey'}}>
-                    <p>Vaccinations completed: {county.vaxCompleted}</p>
+                    <p>Vaccinations completed: {vaxCompleted}</p>
                 </span>
             </div>
         </div>

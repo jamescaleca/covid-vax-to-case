@@ -63,13 +63,37 @@ export default function DataProvider(props) {
 
     const statesUrl = `https://api.covidactnow.org/v2/states.timeseries.json?apiKey=${process.env.REACT_APP_COVID_KEY}`
 
-    const [countryData, setCountryData] = useState({})
-    const [statePlaceholder, setStatePlaceholder] = useState('default')
-    const [selectedState, setSelectedState] = useState('')
+    const about = (
+        <li className='about-map'>
+            <p>The more red a county appears on the map, the higher the percentage of that area's population is vaccinated.</p>
+            <p>The more green each area appears, the lower the percentage of the population is vaccinated.</p>
+        </li> 
+    )
+
+    const footer = (
+        <footer>
+            <p>COVID data courtesy of 
+                <a href='https://covidactnow.org'> Covid Act Now</a>
+            </p>
+            <p>Coordinates data courtesy of 
+                <a href='https://www.opendatasoft.com/'> opendatasoft</a>
+            </p>
+        </footer>
+    )
+
     const [countryView, setCountryView] = useState(true)
+    const [countryData, setCountryData] = useState({})
+
+    const [statePlaceholder, setStatePlaceholder] = useState('default')
+    
+    const [selectedState, setSelectedState] = useState('')
     const [allStatesData, setAllStatesData] = useState([])
     const [stateCombinedData, setStateCombinedData] = useState([])
+
     const [ allStatesAbbrevArr ] = useState(allStatesAbbrevCoord)
+
+    const [ aboutMap ] = useState(about)
+    const [ mapFooter ] = useState(footer)
 
     function toggleCountryView() {
         return setCountryView(prev => !prev)
@@ -84,7 +108,6 @@ export default function DataProvider(props) {
         toggleCountryView()
         resetState()
     }
-
 
     const diffStateCoords = allStatesAbbrevArr.filter(state => state.state === selectedState)
 
@@ -104,8 +127,6 @@ export default function DataProvider(props) {
             })
             .catch(err => console.log(err))
     }
-
-
 
     useEffect(() => {
         function getAllStatesData() {
@@ -157,7 +178,9 @@ export default function DataProvider(props) {
             setStateCombinedData,
             resetState,
             homeButton,
-            diffStateCoords
+            diffStateCoords,
+            aboutMap,
+            mapFooter
         }}>{props.children}
         </DataContext.Provider>
     )
