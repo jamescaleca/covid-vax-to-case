@@ -1,5 +1,7 @@
 import React, { useContext } from 'react'
+
 import { round } from 'mathjs'
+
 import { DataContext } from '../contexts/dataProvider'
 
 export default function StateData() {

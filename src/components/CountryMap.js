@@ -1,8 +1,10 @@
 import React, { useContext, useState, useEffect } from 'react'
+
 import GoogleMapReact from 'google-map-react'
-import Marker from './Marker.js'
 import { round } from 'mathjs'
+
 import { DataContext } from '../contexts/dataProvider'
+import Marker from './Marker.js'
 
 export default function CountryMap(props) {
     const { allStatesData, } = useContext(DataContext)

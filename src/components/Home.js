@@ -1,9 +1,11 @@
 import React, { useContext, useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
+
+import { round } from 'mathjs'
+
 import { DataContext } from '../contexts/dataProvider'
 import CountryMap from './CountryMap'
 import CountryData from './CountryData'
-import { round } from 'mathjs'
 import '../css/styles.css'
 
 function Home() {
@@ -45,7 +47,7 @@ function Home() {
             }
 
             <CountryMap mappedData={mappedData}/>
-            
+
             {aboutMap}
             {mapFooter}
         </div>

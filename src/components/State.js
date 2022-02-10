@@ -1,9 +1,11 @@
 import React, { useContext, useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
+
+import { round } from 'mathjs'
+
 import { DataContext } from '../contexts/dataProvider'
 import StateMap from './StateMap'
 import StateData from './StateData'
-import { round } from 'mathjs'
 import '../css/styles.css'
 
 function State() {
@@ -49,7 +51,7 @@ function State() {
             </ul>
 
             <StateMap mappedData={mappedData} />
-            
+
             {aboutMap}
             {mapFooter}
         </div> 

@@ -1,7 +1,9 @@
 import React, { useContext } from 'react'
 import { Link } from 'react-router-dom'
+
 import axios from 'axios'
 import { round } from 'mathjs'
+
 import { DataContext } from '../contexts/dataProvider'
 
 export default function StateSelector(){

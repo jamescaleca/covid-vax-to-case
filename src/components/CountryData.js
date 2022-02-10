@@ -1,4 +1,5 @@
 import React, { useContext } from 'react'
+
 import { DataContext } from '../contexts/dataProvider'
 
 export default function CountryData() {

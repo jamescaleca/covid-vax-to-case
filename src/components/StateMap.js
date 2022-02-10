@@ -1,7 +1,9 @@
 import React, { useContext, useState, useEffect } from 'react'
+
 import GoogleMapReact from 'google-map-react'
-import Marker from './Marker.js'
+
 import { DataContext } from '../contexts/dataProvider'
+import Marker from './Marker.js'
 
 export default function StateMap(props) {
     const { stateCombinedData, allStatesAbbrevArr, selectedState } = useContext(DataContext)
