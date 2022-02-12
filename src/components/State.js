@@ -15,12 +15,17 @@ function State() {
         stateCombinedData, 
         aboutMap, 
         mapFooter,
-        allStatesAbbrevArr,
-        selectedState
     } = useContext(DataContext)
 
     const [ mappedData, setMappedData ] = useState([])
-    // const [ coords, setCoords ] = useState([])
+
+    const buttonContainer = {
+        "height": "2em"
+    }
+    
+    const buttonStyle = {
+        "height": "100%"
+    }
 
     useEffect(() => {
         function mapHeatMapData() {
@@ -34,15 +39,8 @@ function State() {
             })
             return setMappedData(mappedCountiesData)
         }
-        // function stateCoords() {
-        //     const filterCoords = allStatesAbbrevArr.filter(state => state.state === selectedState)
-        //     // console.log(filterCoords)
-        //     return setCoords(filterCoords)
-        // }
-        
         mapHeatMapData()
-        // stateCoords()
-    }, [ stateCombinedData, allStatesAbbrevArr, selectedState ])
+    }, [ stateCombinedData ])
 
     return (
         <div className='home'>
@@ -52,22 +50,18 @@ function State() {
             
             <ul className='main-content'>
                 <li className='data-block'><StateData /></li>
-                <Link to='/state'>
-                    <button onClick={resetState}>Go back to state selection</button>
-                </Link>
-                <Link to='/'>
-                    <button onClick={homeButton}>Back to home</button>
-                </Link>
+                <div style={buttonContainer}>
+                    <Link style={buttonStyle} to='/state'>
+                        <button style={buttonStyle} onClick={resetState}>Go back to state selection</button>
+                    </Link>
+                </div>
+                <div style={buttonContainer}>
+                    <Link style={buttonStyle} to='/'>
+                        <button style={buttonStyle} onClick={homeButton}>Back to home</button>
+                    </Link>
+                </div>
             </ul>
-
-            
-                <StateMap mappedData={mappedData}   />
-                
-            
-                
-                
-            
-
+            <StateMap mappedData={mappedData} />
             {aboutMap}
             {mapFooter}
         </div> 
