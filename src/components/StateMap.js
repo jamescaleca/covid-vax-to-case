@@ -8,9 +8,10 @@ import Marker from './Marker.js'
 export default function StateMap(props) {
     const { stateCombinedData, allStatesAbbrevArr, selectedState } = useContext(DataContext)
 
-    const [ heatMapData, setHeatMapData ] = useState([])
-
     const { mappedData } = props
+
+    const [ heatMapData, setHeatMapData ] = useState([])
+    const [coords] = useState(allStatesAbbrevArr.filter(state => state.state === selectedState))
 
     useEffect(() => {
         function heatMapFunc() {
@@ -20,10 +21,16 @@ export default function StateMap(props) {
                 options: mapOptions
             })
         }
+        // function stateCoords() {
+        //     const filterCoords = allStatesAbbrevArr.filter(state => state.state === selectedState)
+        //     console.log(filterCoords)
+        //     return setCoords(filterCoords)
+            
+        // }
         heatMapFunc()
+        // stateCoords()
     }, [ mappedData ])
 
-    const stateCoords = allStatesAbbrevArr.filter(state => state.state === selectedState)
 
     return (
         <div className='map' >
@@ -33,8 +40,8 @@ export default function StateMap(props) {
                     libraries: ['visualization']
                 }}
                 center={{
-                    lat: stateCoords[0].lat, 
-                    lng: stateCoords[0].lng
+                    lat: coords[0].lat, 
+                    lng: coords[0].lng
                 }}
                 defaultZoom={8}
                 heatmap={heatMapData}

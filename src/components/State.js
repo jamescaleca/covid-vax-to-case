@@ -14,10 +14,13 @@ function State() {
         homeButton, 
         stateCombinedData, 
         aboutMap, 
-        mapFooter 
+        mapFooter,
+        allStatesAbbrevArr,
+        selectedState
     } = useContext(DataContext)
 
     const [ mappedData, setMappedData ] = useState([])
+    // const [ coords, setCoords ] = useState([])
 
     useEffect(() => {
         function mapHeatMapData() {
@@ -31,8 +34,15 @@ function State() {
             })
             return setMappedData(mappedCountiesData)
         }
+        // function stateCoords() {
+        //     const filterCoords = allStatesAbbrevArr.filter(state => state.state === selectedState)
+        //     // console.log(filterCoords)
+        //     return setCoords(filterCoords)
+        // }
+        
         mapHeatMapData()
-    }, [ stateCombinedData ])
+        // stateCoords()
+    }, [ stateCombinedData, allStatesAbbrevArr, selectedState ])
 
     return (
         <div className='home'>
@@ -50,7 +60,13 @@ function State() {
                 </Link>
             </ul>
 
-            <StateMap mappedData={mappedData} />
+            
+                <StateMap mappedData={mappedData}   />
+                
+            
+                
+                
+            
 
             {aboutMap}
             {mapFooter}
