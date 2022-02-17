@@ -8,8 +8,6 @@ import { DataContext } from '../contexts/dataProvider'
 export default function StateButton() {
     const { stateCombinedData, setStateCombinedData, selectedState } = useContext(DataContext)
 
-    console.log(stateCombinedData)
-
     useEffect(() => {
         function combineDiffStateCoordsCovid() {
             axios
