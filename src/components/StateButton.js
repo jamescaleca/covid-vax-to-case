@@ -47,7 +47,7 @@ export default function StateButton() {
                 : <h1>Loading... </h1>
                 }
             </>
-                : null
+                : <h1>Loading... </h1>
             }
             
         </>
