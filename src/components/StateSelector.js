@@ -26,11 +26,12 @@ export default function StateSelector(){
 
     function handleStateChange(e) {
         const { value } = e.target
+        setSelectedState(value)
         axios
             .get(`https://api.covidactnow.org/v2/county/${value}.timeseries.json?apiKey=${process.env.REACT_APP_COVID_KEY}`)
             .then(res => {
                 if(countryView === true) toggleCountryView()
-                setSelectedState(value)
+                // setSelectedState(value)
                 res.data.map(county => {
                     return setStateCombinedData(prevState => ([
                         ...prevState,
